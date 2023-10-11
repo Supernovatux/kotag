@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://cm0okmsh0s6pr"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_jmeuu"]
+[ext_resource type="PackedScene" uid="uid://kquu66me8sxw" path="res://character_body_2d.tscn" id="2_q80s7"]
+[ext_resource type="PackedScene" uid="uid://cvbbs1ewvf5f5" path="res://hud.tscn" id="3_07dj4"]
+[ext_resource type="PackedScene" uid="uid://l2apayhmafwo" path="res://bliss.tscn" id="4_v8rd4"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_p0m5q"]
+a = Vector2(1923, 1075)
+b = Vector2(5, 1082)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_kvkvf"]
+a = Vector2(-11, -1171)
+b = Vector2(-1, 1091)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_w5ebd"]
+a = Vector2(1857, -2409)
+b = Vector2(1925, 1078)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_jmeuu")
+player_scene = ExtResource("2_q80s7")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_p0m5q")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_kvkvf")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1, 0)
+shape = SubResource("SegmentShape2D_w5ebd")
+
+[node name="HUD" parent="." instance=ExtResource("3_07dj4")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+offset_right = 1922.0
+offset_bottom = 1073.0
+grow_horizontal = 1
+
+[node name="Bliss" parent="." instance=ExtResource("4_v8rd4")]
+metadata/_edit_group_ = true
+
+[connection signal="HudOut" from="HUD" to="." method="_on_hud_hud_out"]

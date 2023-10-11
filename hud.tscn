@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvbbs1ewvf5f5"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_abws3"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+script = ExtResource("1_abws3")
+metadata/_edit_group_ = true
+
+[node name="TimeLeft" type="Label" parent="."]
+show_behind_parent = true
+top_level = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -305.5
+offset_right = 305.5
+offset_bottom = 104.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MatchCountdown" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="MatchCountdown" to="." method="_on_match_countdown_timeout"]

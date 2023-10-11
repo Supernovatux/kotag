@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cycv4baww3w70"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_eijyl"]
+[ext_resource type="PackedScene" uid="uid://cm0okmsh0s6pr" path="res://world.tscn" id="2_v35rs"]
+[ext_resource type="PackedScene" uid="uid://ds6jw5cq6od6d" path="res://winer_screen.tscn" id="3_mdlre"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_eijyl")
+
+[node name="World" parent="." instance=ExtResource("2_v35rs")]
+
+[node name="MakeCatcher" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+autostart = true
+
+[node name="WinerScreen" parent="." instance=ExtResource("3_mdlre")]
+
+[connection signal="summon" from="." to="World" method="_on_main_summon"]
+[connection signal="loser" from="World" to="." method="_on_world_loser"]
+[connection signal="timeout" from="MakeCatcher" to="World" method="_on_make_catcher_timeout"]

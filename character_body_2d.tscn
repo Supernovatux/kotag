@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://kquu66me8sxw"]
+
+[ext_resource type="Script" path="res://character_body_2d.gd" id="1_3ylyd"]
+[ext_resource type="Texture2D" uid="uid://bt2d6x8kmqdb0" path="res://icon.svg" id="1_jajq7"]
+[ext_resource type="Script" path="res://Sprite2D2.gd" id="3_f5151"]
+[ext_resource type="Script" path="res://char_area.gd" id="3_mw6k8"]
+[ext_resource type="Shape2D" uid="uid://ce6wyppakihp6" path="res://character_body_2d_untagged.tres" id="4_feblf"]
+[ext_resource type="Script" path="res://CollisionShape2D.gd" id="4_fv6i2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8cwel"]
+size = Vector2(140, 126.5)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(3, 70)
+collision_mask = 2
+script = ExtResource("1_3ylyd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_jajq7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.1875)
+scale = Vector2(0.25, 0.25)
+shape = SubResource("RectangleShape2D_8cwel")
+
+[node name="TagArea" type="Area2D" parent="."]
+position = Vector2(1, 20)
+collision_priority = 10.0
+script = ExtResource("3_mw6k8")
+metadata/_edit_group_ = true
+
+[node name="TagShape" type="CollisionShape2D" parent="TagArea"]
+position = Vector2(-1.5, -20)
+scale = Vector2(0.25, 0.25)
+shape = ExtResource("4_feblf")
+debug_color = Color(0.729412, 0.396078, 0.682353, 0.419608)
+script = ExtResource("4_fv6i2")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(2, -36)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_jajq7")
+script = ExtResource("3_f5151")
+
+[node name="ReBoost" type="Timer" parent="."]
+wait_time = 1.881
+autostart = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = -21.0
+offset_top = -32.0
+offset_right = 19.0
+offset_bottom = -9.0
+
+[node name="KillCount" type="Timer" parent="."]
+
+[connection signal="tag" from="." to="Sprite2D2" method="_on_character_body_2d_tag"]
+[connection signal="area_entered" from="TagArea" to="." method="_on_area_2d_area_entered"]
+[connection signal="timeout" from="ReBoost" to="." method="_on_re_boost_timeout"]
+[connection signal="timeout" from="KillCount" to="." method="_on_kill_count_timeout"]
